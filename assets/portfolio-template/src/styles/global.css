@@ -1,0 +1,343 @@
+/*
+ * Minimal baseline styles. These exist so the template renders cleanly out of
+ * the box. The impeccable skill is expected to REPLACE these with a full design
+ * system (tokens, typography, motion, responsive). The CSS custom properties
+ * below are the seed tokens impeccable should build on.
+ */
+
+:root {
+  --color-bg: #ffffff;
+  --color-surface: #f7f7f8;
+  --color-ink: #1a1a1f;
+  --color-muted: #6b6b76;
+  --color-accent: #2a2a2f;
+  --color-border: #e6e6ea;
+
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: Georgia, 'Times New Roman', serif;
+
+  --container: 1120px;
+  --reading: 680px;
+  --radius: 8px;
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-ink);
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--space-3);
+}
+
+/* ---- Header ---- */
+.site-header {
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.site-header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.site-logo {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+.site-nav {
+  display: flex;
+  gap: var(--space-3);
+}
+.site-nav a {
+  color: var(--color-muted);
+  transition: color 0.2s;
+}
+.site-nav a:hover {
+  color: var(--color-ink);
+}
+
+/* ---- Footer ---- */
+.site-footer {
+  padding: var(--space-5) 0 var(--space-4);
+  border-top: 1px solid var(--color-border);
+  color: var(--color-muted);
+  font-size: 0.875rem;
+  margin-top: var(--space-5);
+}
+
+/* ---- Homepage hero ---- */
+.hero {
+  padding: var(--space-5) 0 var(--space-4);
+}
+.hero h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  max-width: 18ch;
+}
+.lede {
+  font-size: 1.25rem;
+  color: var(--color-muted);
+  margin-top: var(--space-2);
+  max-width: 52ch;
+}
+
+/* ---- Section headings ---- */
+.section-heading {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-muted);
+  margin-bottom: var(--space-3);
+  font-weight: 600;
+}
+
+/* ---- Project grid ---- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--space-4);
+}
+.project-list {
+  margin-bottom: var(--space-5);
+}
+.project-card a {
+  display: block;
+}
+.project-card img {
+  border-radius: var(--radius);
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  background: var(--color-surface);
+}
+.card-body {
+  padding-top: var(--space-2);
+}
+.card-body h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+.card-body p {
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  margin-top: 0.25rem;
+}
+.card-meta {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  margin-top: var(--space-1);
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+/* ---- Tags ---- */
+.tag {
+  display: inline-block;
+  padding: 0.15em 0.6em;
+  background: var(--color-surface);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+/* ---- Case study layout ---- */
+.case-study {
+  padding: var(--space-4) 0;
+}
+.case-hero {
+  margin-bottom: var(--space-4);
+}
+.hero-cover {
+  border-radius: var(--radius);
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: var(--color-surface);
+  margin-bottom: var(--space-3);
+}
+.hero-text h1 {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+/* Meta sidebar */
+.case-meta {
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-2) 0;
+  margin: var(--space-3) 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+}
+.case-meta dl {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+.meta-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+.meta-row dt {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-muted);
+}
+.meta-row dd {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+.meta-tags,
+.meta-links {
+  display: flex;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+}
+.meta-links a {
+  color: var(--color-accent);
+  font-weight: 500;
+}
+
+/* Narrative reading column */
+.case-body {
+  max-width: var(--reading);
+  margin: var(--space-4) auto;
+}
+
+/* Gallery grid */
+.case-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-3);
+  margin: var(--space-4) 0;
+}
+.case-gallery figure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+.case-gallery img {
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border);
+}
+.case-gallery figcaption {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+.case-footer {
+  margin-top: var(--space-5);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+.case-footer a {
+  color: var(--color-muted);
+  font-weight: 500;
+}
+
+/* ---- Prose (Markdown body) ---- */
+.prose {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+}
+.prose h2 {
+  font-size: 1.5rem;
+  margin: var(--space-4) 0 var(--space-2);
+  letter-spacing: -0.01em;
+}
+.prose h3 {
+  font-size: 1.2rem;
+  margin: var(--space-3) 0 var(--space-1);
+}
+.prose p {
+  margin-bottom: var(--space-2);
+}
+.prose ul,
+.prose ol {
+  margin: 0 0 var(--space-2) 1.5rem;
+}
+.prose li {
+  margin-bottom: 0.4rem;
+}
+.prose img {
+  border-radius: var(--radius);
+  margin: var(--space-3) 0;
+}
+.prose blockquote {
+  border-left: 3px solid var(--color-border);
+  padding-left: var(--space-2);
+  color: var(--color-muted);
+  font-style: italic;
+  margin: var(--space-2) 0;
+}
+.prose a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.prose code {
+  font-family: 'SF Mono', Menlo, monospace;
+  font-size: 0.9em;
+  background: var(--color-surface);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 640px) {
+  .hero h1 {
+    max-width: none;
+  }
+  .case-meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ---- Reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

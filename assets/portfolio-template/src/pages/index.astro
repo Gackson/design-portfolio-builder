@@ -1,0 +1,90 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+// Pull all projects, exclude drafts in production, sort by `order` then newest year first.
+const allProjects = await getCollection('projects', ({ data }) => {
+  return import.meta.env.PROD ? data.draft !== true : true;
+});
+
+const projects = allProjects.sort((a, b) => {
+  if (a.data.order !== b.data.order) return a.data.order - b.data.order;
+  return b.data.year - a.data.year;
+});
+
+const featured = projects.filter((p) => p.data.featured);
+const rest = projects.filter((p) => !p.data.featured);
+---
+
+<Base
+  title="Your Name — Design Portfolio"
+  description="A selection of design work and case studies."
+>
+  <section class="hero">
+    <h1>Design that earns its length.</h1>
+    <p class="lede">
+      A one-line tagline describing who you are and what you do. Edit this in
+      <code>src/pages/index.astro</code>.
+    </p>
+  </section>
+
+  {featured.length > 0 && (
+    <section class="project-list featured">
+      <h2 class="section-heading">Featured</h2>
+      <div class="grid">
+        {featured.map((project) => (
+          <article class="project-card">
+            <a href={`/projects/${project.id}/`}>
+              {project.data.cover && (
+                <img
+                  src={project.data.cover}
+                  alt={project.data.title}
+                  loading="lazy"
+                />
+              )}
+              <div class="card-body">
+                <h3>{project.data.title}</h3>
+                <p>{project.data.summary}</p>
+                <div class="card-meta">
+                  <span>{project.data.year}</span>
+                  {project.data.tags.slice(0, 3).map((tag) => (
+                    <span class="tag">{tag}</span>
+                  ))}
+                </div>
+              </div>
+            </a>
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <section class="project-list">
+    <h2 class="section-heading">All work</h2>
+    <div class="grid">
+      {rest.map((project) => (
+        <article class="project-card">
+          <a href={`/projects/${project.id}/`}>
+            {project.data.cover && (
+              <img
+                src={project.data.cover}
+                alt={project.data.title}
+                loading="lazy"
+              />
+            )}
+            <div class="card-body">
+              <h3>{project.data.title}</h3>
+              <p>{project.data.summary}</p>
+              <div class="card-meta">
+                <span>{project.data.year}</span>
+                {project.data.tags.slice(0, 3).map((tag) => (
+                  <span class="tag">{tag}</span>
+                ))}
+              </div>
+            </div>
+          </a>
+        </article>
+      ))}
+    </div>
+  </section>
+</Base>

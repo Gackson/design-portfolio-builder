@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+.astro/
+
+# Environment
+.env
+.env.production
+
+# OS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+
+# impeccable
+.impeccable/

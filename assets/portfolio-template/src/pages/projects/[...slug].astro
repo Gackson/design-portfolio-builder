@@ -1,0 +1,90 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+// Generate one page per project.
+export async function getStaticPaths() {
+  const projects = await getCollection('projects', ({ data }) => {
+    return import.meta.env.PROD ? data.draft !== true : true;
+  });
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const d = project.data;
+const meta = [
+  d.client && { label: 'Client', value: d.client },
+  d.duration && { label: 'Duration', value: d.duration },
+  { label: 'Role', value: d.role.join(', ') },
+  d.team && d.team.length > 0 && { label: 'Team', value: d.team.join(', ') },
+  { label: 'Year', value: String(d.year) },
+].filter(Boolean);
+---
+
+<Base title={d.title} description={d.summary}>
+  <article class="case-study">
+    <!-- Hero: cover image + title + summary -->
+    <header class="case-hero">
+      {d.cover && (
+        <img class="hero-cover" src={d.cover} alt={d.title} />
+      )}
+      <div class="hero-text">
+        <h1>{d.title}</h1>
+        <p class="lede">{d.summary}</p>
+      </div>
+    </header>
+
+    <!-- Meta sidebar: structured frontmatter rendered as a definition list -->
+    {meta.length > 0 && (
+      <aside class="case-meta">
+        <dl>
+          {meta.map((item) => (
+            <div class="meta-row">
+              <dt>{item.label}</dt>
+              <dd>{item.value}</dd>
+            </div>
+          ))}
+        </dl>
+        {d.tags.length > 0 && (
+          <div class="meta-tags">
+            {d.tags.map((tag) => (
+              <span class="tag">{tag}</span>
+            ))}
+          </div>
+        )}
+        {d.links.length > 0 && (
+          <div class="meta-links">
+            {d.links.map((link) => (
+              <a href={link.url} rel="noopener" target="_blank">{link.label} &rarr;</a>
+            ))}
+          </div>
+        )}
+      </aside>
+    )}
+
+    <!-- Narrative: the Markdown body renders here as a reading column -->
+    <div class="case-body prose">
+      <Content />
+    </div>
+
+    <!-- Gallery: frontmatter `gallery` array rendered as a responsive grid -->
+    {d.gallery.length > 0 && (
+      <section class="case-gallery">
+        {d.gallery.map((img) => (
+          <figure>
+            <img src={img.src} alt={img.alt} loading="lazy" />
+            {img.caption && <figcaption>{img.caption}</figcaption>}
+          </figure>
+        ))}
+      </section>
+    )}
+
+    <nav class="case-footer">
+      <a href="/">&larr; All work</a>
+    </nav>
+  </article>
+</Base>
